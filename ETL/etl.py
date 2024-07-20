@@ -72,7 +72,6 @@ if __name__ == "__main__":
     csv_file_path = 'private/Data.csv'
     conn = get_connection()
     
-    # Убедитесь, что conn содержит правильные параметры для подключения к базе данных
     db_config = {
         'dbname': conn.info.dbname,
         'user': conn.info.user,
