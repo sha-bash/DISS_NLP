@@ -58,11 +58,18 @@ class ETLProcessor:
         for index, row in self.data.iterrows():
             # Преобразование numpy.ndarray в список
             vectorized_text_list = row['vectorized_text'].tolist()
-            insert_query = sql.SQL("""
+            insert_query = sql.SQL("""             
             INSERT INTO processed_texts (text, processed_text, vectorized_text, label, label_id)
             VALUES (%s, %s, %s, %s, %s)
             """)
             cursor.execute(insert_query, (row['Текст'], row['processed_text'], vectorized_text_list, row['Метка'], row['label_id']))
+
+        delete_query = """
+        DELETE FROM processed_texts
+        WHERE text = 'NaN'
+        """
+        cursor.execute(delete_query)
+        conn.commit()
         
         conn.commit()
         cursor.close()

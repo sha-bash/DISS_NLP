@@ -3,13 +3,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import string
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
+import pymystem3
 
 class TextPreprocessor:
     def __init__(self, language='russian'):
         self.language = language
         self.stop_words = set(stopwords.words(language))
-        self.lemmatizer = WordNetLemmatizer()
+        self.lemmatizer = pymystem3.Mystem()  # Используйте pymystem3 для русского языка
 
     def preprocess_text(self, text):
         if not isinstance(text, str):
@@ -31,7 +31,7 @@ class TextPreprocessor:
         
             # Удаление стоп-слов и лемматизация
             words = word_tokenize(text)
-            filtered_words = [self.lemmatizer.lemmatize(word) for word in words if word.lower() not in self.stop_words]
+            filtered_words = [self.lemmatizer.lemmatize(word)[0] for word in words if word.lower() not in self.stop_words]
             
             if not filtered_words:
                 raise ValueError("Пустой словарный запас; возможно, документы содержат только стоп-слова")
