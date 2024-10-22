@@ -9,7 +9,7 @@ class TextPreprocessor:
     def __init__(self, language='russian'):
         self.language = language
         self.stop_words = set(stopwords.words(language))
-        self.lemmatizer = pymystem3.Mystem()  # Используйте pymystem3 для русского языка
+        self.lemmatizer = pymystem3.Mystem()  
 
     def preprocess_text(self, text):
         if not isinstance(text, str):
